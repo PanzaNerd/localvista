@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalVista | Sistema di acquisizione per Palestre</title>
+	<link rel="icon" type="image/png" sizes="48x48" href="https://res.cloudinary.com/dmkt03m79/image/upload/v1773514820/FLAVICON_LV-removebg-preview_atiaiu.png">
+	<link rel="apple-touch-icon" href="https://res.cloudinary.com/dmkt03m79/image/upload/v1772542558/FLAVICON_LV_x7gbsm.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           ANIMAZIONI NAVBAR (Effetto Calamita)
+           ========================================= */
+
+        /* Icona: Droppa da in alto a sinistra */
+        @keyframes dropMergeLeft {
+            0% { opacity: 0; transform: translate(-60px, -40px); }
+            100% { opacity: 1; transform: translate(0, 0); }
+        }
+
+        /* Testo: Droppa da in alto a destra */
+        @keyframes dropMergeRight {
+            0% { opacity: 0; transform: translate(60px, -40px); }
+            100% { opacity: 1; transform: translate(0, 0); }
+        }
+
+        /* Bottone: Scende dritto */
+        @keyframes dropStraight {
+            0% { opacity: 0; transform: translateY(-40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Classi di esecuzione con curva ultra-fluida e accelerazione hardware */
+        .animate-merge-left {
+            opacity: 0;
+            will-change: transform, opacity; /* <-- La chicca per le prestazioni */
+            animation: dropMergeLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-merge-right {
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: dropMergeRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-drop-btn {
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: dropStraight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.3s;
+        }
+
+        /* =========================================
+           REGOLE GENERALI SITO
+           ========================================= */
+
+        body { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        .fade-in {
+            will-change: transform, opacity;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+		/* Barra di progresso scroll */
+		#lv-progress {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 0%;
+		    height: 4px;
+		    z-index: 9999;
+		    background: linear-gradient(90deg, #2563eb, #06b6d4);
+		    box-shadow: 0 0 12px rgba(37, 99, 235, 0.45);
+		    transition: width 0.08s linear;
+		}
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-50 antialiased selection:bg-blue-500 selection:text-white">
+<div id="lv-progress"></div>
+<nav class="fixed w-full z-40 top-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
+
+            <div class="flex items-center justify-center animate-merge-left">
+                <img src="https://res.cloudinary.com/dv08dmzaz/image/upload/v1773132821/Immagine-removebg-preview_aneb3k.png"
+                     alt="LocalVista Icon"
+                     class="h-10 w-auto transition-transform duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]">
+            </div>
+
+            <span class="flex items-baseline text-2xl font-black tracking-tighter text-white leading-none animate-merge-right">
+                Local<span class="text-blue-500 transition-all duration-300 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]">Vista</span>
+            </span>
+        </div>
+
+        <a href="#call" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl border border-blue-700 transition-all duration-300 shadow-[0_5px_15px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(37,99,235,0.6)] animate-drop-btn">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+            </span>
+            Verifica Disponibilità
+        </a>
+
+    </div>
+</nav>
+
+<header class="max-w-5xl mx-auto px-6 pt-32 pb-16 text-center fade-in">
+    <div class="inline-block px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-blue-400 font-semibold text-sm mb-6 shadow-sm">
+        🎯 Sistema progettato esclusivamente per palestre e centri fitness
+    </div>
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-white mb-6">
+        Un sistema che trasforma i messaggi su Instagram in <span class="text-blue-500">appuntamenti</span>.
+    </h1>
+    <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto">
+        Risponde subito, organizza le richieste e guida le persone a prenotare una prova. Recupera anche i vecchi iscritti che non hanno rinnovato, mentre tu fai lezione.
+    </p>
+
+    <a href="#call" class="inline-block px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-500 transition shadow-[0_0_20px_rgba(37,99,235,0.4)] mb-6">
+        Vedi se fa per la tua struttura
+    </a>
+
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-400 font-medium">
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Setup rapido</span>
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Nessun cambio gestionale richiesto</span>
+        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> 100% in background</span>
+    </div>
+</header>
+
+<section class="bg-slate-800/30 py-20 border-y border-slate-800 fade-in" style="animation-delay: 0.1s; opacity: 0;">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white">Lavora per te, 24 ore su 24</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">⚡</div>
+                <h3 class="text-xl font-bold mb-2">Risponde subito</h3>
+                <p class="text-slate-600 text-sm">Se ti scrivono alle 22:00 per i prezzi, il sistema risponde subito e fissa la prova senza farti perdere il contatto.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">📅</div>
+                <h3 class="text-xl font-bold mb-2">Riempie l'agenda</h3>
+                <p class="text-slate-600 text-sm">Fine del ping-pong di messaggi. Il cliente vede le tue disponibilità e prenota in autonomia.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">💰</div>
+                <h3 class="text-xl font-bold mb-2">Recupera ex-iscritti</h3>
+                <p class="text-slate-600 text-sm">Contatta in automatico chi non ha rinnovato l'anno scorso. Riporti persone in sala a costo di acquisizione zero.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">🔔</div>
+                <h3 class="text-xl font-bold mb-2">Azzera i No-Show</h3>
+                <p class="text-slate-600 text-sm">Invia promemoria automatici su WhatsApp prima della prova. Le persone si presentano o liberano il posto per tempo.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">⭐</div>
+                <h3 class="text-xl font-bold mb-2">Genera Recensioni</h3>
+                <p class="text-slate-600 text-sm">Dopo il primo allenamento, chiede in automatico di lasciarti 5 stelle su Google per dominare la tua zona.</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-blue-500 text-slate-900 transition hover:-translate-y-1">
+                <div class="text-3xl mb-3">📢</div>
+                <h3 class="text-xl font-bold mb-2">Lancia Promo a Tutti</h3>
+                <p class="text-slate-600 text-sm">Hai uno sconto estivo o un nuovo corso? Invia un singolo messaggio WhatsApp a tutta la tua lista contatti e riempi le classi a costo zero.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-4xl mx-auto px-6 py-24 fade-in" style="animation-delay: 0.2s; opacity: 0;">
+    <div class="max-w-2xl mx-auto text-center mb-6">
+        <h2 class="text-3xl font-bold text-white mb-4">Guarda il sistema dall'interno</h2>
+
+        <div class="inline-flex items-center gap-3 bg-slate-800/50 border border-slate-700 pl-1.5 pr-5 py-1.5 rounded-full cursor-pointer hover:bg-slate-700 hover:border-blue-500/50 transition duration-300 group" onclick="openModal()">
+            <div class="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 shadow-lg transition-transform group-hover:scale-105">
+                <img src="https://res.cloudinary.com/dv08dmzaz/image/upload/v1773133200/thias_ge7rs4.png"
+                     alt="Matthias"
+                     class="w-full h-full object-cover">
+            </div>
+            <p class="text-sm text-slate-300">👋 Ciao, sono <span class="text-white font-bold group-hover:text-blue-400 transition">Matthias</span>. Clicca play per la demo.</p>
+        </div>
+    </div>
+
+    <div class="relative group cursor-pointer rounded-2xl overflow-hidden shadow-2xl border border-slate-700 aspect-video bg-slate-800 flex items-center justify-center" onclick="openModal()">
+        <img src="https://res.cloudinary.com/dmkt03m79/image/upload/v1772480862/COPERTINA_VIDEO_qd7vb6.png" alt="Demo Video" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-50 transition duration-500">
+
+        <div class="relative z-10 w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.5)] group-hover:scale-110 transition duration-300">
+            <div class="absolute inset-0 rounded-full bg-blue-600 animate-ping opacity-20"></div>
+            <svg class="w-8 h-8 text-white ml-1 relative z-20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+    </div>
+
+    <p class="text-center text-slate-500 text-sm mt-4">
+        ⏳ <span class="font-semibold text-slate-400">Hai poco tempo?</span> Salta al minuto <span class="text-blue-400 font-bold">03:15</span> per vedere come recuperiamo gli ex-iscritti.
+    </p>
+</section>
+
+<section class="py-16 bg-slate-900 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-10">La differenza è matematica</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
+            <div class="bg-slate-800 p-8">
+                <h3 class="text-red-400 font-bold text-lg mb-6 flex items-center gap-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Gestione Tradizionale</h3>
+                <ul class="space-y-4 text-slate-400 text-sm">
+                    <li class="flex gap-3"><span>❌</span> Rispondi quando puoi (e perdi chi ha fretta)</li>
+                    <li class="flex gap-3"><span>❌</span> Messaggi infiniti per trovare un orario libero</li>
+                    <li class="flex gap-3"><span>❌</span> Ti dimentichi di ricontattare chi ha chiesto info</li>
+                    <li class="flex gap-3"><span>❌</span> Prove gratuite che non si presentano in sala</li>
+                </ul>
+            </div>
+            <div class="bg-blue-600 p-8 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Con LocalVista</h3>
+                <ul class="space-y-4 text-blue-50 text-sm relative z-10">
+                    <li class="flex gap-3"><span>✅</span> Risposta in 2 secondi netti, H24</li>
+                    <li class="flex gap-3"><span>✅</span> Il cliente prenota da solo sul tuo calendario</li>
+                    <li class="flex gap-3"><span>✅</span> Follow-up automatico a chi smette di rispondere</li>
+                    <li class="flex gap-3"><span>✅</span> Promemoria inviati da soli: sala sempre piena</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="call" class="py-24 bg-slate-800 border-t border-slate-700">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 font-bold text-sm mb-6 animate-pulse">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                ATTENZIONE: Lavoriamo con una sola struttura per zona.
+            </div>
+
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Verifica se la tua zona è libera</h2>
+            <p class="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">Seleziona un orario per una chiamata conoscitiva. Ti mostreremo il sistema dal vivo e verificheremo se c'è disponibilità per il tuo quartiere.</p>
+
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 text-left max-w-2xl mx-auto shadow-xl mb-10">
+                <div class="text-5xl drop-shadow-md">⚖️</div>
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-1">Sessione di Qualificazione</h4>
+                    <p class="text-slate-400 text-sm">Non lavoriamo con tutti. Analizziamo il tuo flusso attuale per capire onestamente se c'è un fit reciproco. Se il sistema non può portarti un vero ritorno economico, te lo diremo subito.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden min-h-[600px] p-2 md:p-6 ring-4 ring-slate-700/50">
+
+            <div style="overflow: hidden; padding-bottom: 10px;">
+                <div style="margin-bottom: -245px;">
+
+                    <div class="tidycal-embed" data-path="localvista/call"></div>
+                    <script src="https://assets.tidycal.com/js/embed.js" async></script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-slate-950 text-slate-500 py-8 text-center text-sm border-t border-slate-800">
+    <p class="mb-3">© 2026 LocalVista. Esclusiva per Centri Fitness.</p>
+
+    <div class="flex items-center justify-center gap-3 flex-wrap">
+        <a href="https://www.iubenda.com/privacy-policy/49365475"
+           target="_blank"
+           rel="noopener"
+           class="text-blue-400 hover:text-cyan-400 transition font-medium">
+           Privacy Policy
+        </a>
+
+        <span class="text-slate-700">|</span>
+
+        <a href="https://www.iubenda.com/privacy-policy/49365475/cookie-policy"
+           target="_blank"
+           rel="noopener"
+           class="text-blue-400 hover:text-cyan-400 transition font-medium">
+           Cookie Policy
+        </a>
+    </div>
+</footer>
+
+<div id="videoModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+    <div class="absolute top-6 right-6 text-white cursor-pointer p-2 hover:bg-slate-800 rounded-full transition" onclick="closeModal()">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </div>
+    <div class="w-full max-w-5xl px-4 relative">
+        <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative border border-slate-700">
+            <iframe id="youtubePlayer" class="absolute inset-0 w-full h-full" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('videoModal');
+    const player = document.getElementById('youtubePlayer');
+    const videoId = "NlS-02WMqkw";
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+        }, 10);
+        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&origin=${window.location.origin}`;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            player.src = "";
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+	    const progressBar = document.getElementById('lv-progress');
+
+    window.addEventListener('scroll', function () {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    });
+</script>
+</body>
+</html>
