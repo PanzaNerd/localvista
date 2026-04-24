@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automazione & Efficienza | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --lv-blue: #0052ff;
+        --lv-blue-light: #e5eeff;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Varianti Badge e Testi per Automazione (Tono Blue/Tech) */
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-blue-light);
+        color: var(--lv-blue);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-highlight-tech {
+        color: transparent;
+        background: linear-gradient(90deg, var(--lv-blue), #00a3ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       HERO & GRID
+       ========================================== */
+      .lv-page-hero {
+        padding: 160px 0 80px 0;
+        text-align: center;
+        background: radial-gradient(
+          ellipse at bottom,
+          var(--lv-blue-light) 0%,
+          var(--lv-bg-main) 100%
+        );
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-hero-p {
+        font-size: 1.2rem;
+        color: var(--lv-text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem auto;
+      }
+
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .lv-card {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        padding: 2.5rem 2rem;
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+      }
+      .lv-card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        padding: 15px;
+        background: var(--lv-bg-surface);
+        border-radius: var(--radius-sm);
+      }
+      .lv-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+      .lv-card p {
+        color: var(--lv-text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* ==========================================
+       FLOWCHART: NO-SHOW PROTOCOL
+       ========================================== */
+      .lv-flow-container {
+        background: #111;
+        border-radius: var(--radius-lg);
+        padding: 4rem;
+        color: #fff;
+        margin-top: 2rem;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+      }
+      .lv-flow-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 3rem;
+        position: relative;
+      }
+      /* Linea di connessione in background */
+      .lv-flow-grid::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+        z-index: 0;
+      }
+
+      .lv-flow-step {
+        background: #222;
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        text-align: center;
+        border: 1px solid #333;
+        z-index: 1;
+        flex: 1;
+        position: relative;
+      }
+      .lv-flow-step.critical {
+        border-color: var(--lv-blue);
+        box-shadow: 0 0 20px rgba(0, 82, 255, 0.2);
+      }
+      .lv-flow-step h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+      .lv-flow-step p {
+        font-size: 0.85rem;
+        color: #a9b7c6;
+      }
+      .lv-flow-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      /* ==========================================
+       AUDIT FORM (DIAGNOSTICA)
+       ========================================== */
+      .lv-audit-wrapper {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        border-radius: var(--radius-lg);
+        padding: 4rem;
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      }
+      .lv-form-group {
+        margin-bottom: 1.5rem;
+      }
+      .lv-form-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .lv-form-control {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid var(--lv-border);
+        border-radius: var(--radius-md);
+        font-family: var(--font-primary);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .lv-form-control:focus {
+        border-color: var(--lv-blue);
+      }
+      .lv-form-select {
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position-x: 98%;
+        background-position-y: 50%;
+      }
+      .lv-btn-submit {
+        background: var(--lv-text-main);
+        color: #fff;
+        border: none;
+        padding: 16px 32px;
+        border-radius: var(--radius-md);
+        font-weight: 800;
+        font-size: 1.1rem;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.2s;
+        margin-top: 1rem;
+      }
+      .lv-btn-submit:hover {
+        background: var(--lv-blue);
+      }
+
+      @media (max-width: 992px) {
+        .lv-flow-grid {
+          flex-direction: column;
+          gap: 2rem;
+        }
+        .lv-flow-grid::before {
+          display: none;
+        }
+        .lv-flow-step {
+          width: 100%;
+        }
+        .lv-audit-wrapper {
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-page-hero">
+      <div class="lv-container">
+        <div class="lv-badge">Efficienza Operativa</div>
+        <h1 class="lv-h1">
+          Scala le operazioni.<br />Congela i
+          <span class="lv-highlight-tech">costi aziendali.</span>
+        </h1>
+        <p class="lv-hero-p">
+          Colleghiamo i tuoi vecchi gestionali a un'infrastruttura di
+          automazione invisibile. Azzera i No-Show, automatizza il customer care
+          e smetti di usare il tuo staff come centralinisti.
+        </p>
+      </div>
+    </header>
+
+    <section class="lv-section">
+      <div class="lv-container">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h2 class="lv-h2">La tua nuova Flotta Digitale</h2>
+        </div>
+
+        <div
+          class="lv-grid-3"
+          style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"
+        >
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                INTEGRAZIONE
+              </div>
+              <div style="margin: 0; font-size: 1.8rem; line-height: 1">🔀</div>
+            </div>
+            <h3>Il Middleware LV-Bridge</h3>
+            <p>
+              Non devi cambiare il tuo vecchio gestionale. Il nostro sistema
+              proprietario crea un ponte intelligente che sincronizza i tuoi
+              dati con l'ecosistema Google senza farti cambiare interfaccia.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                CUSTOMER CARE
+              </div>
+              <div style="margin: 0; font-size: 1.8rem; line-height: 1">💬</div>
+            </div>
+            <h3>WhatsApp Assistant</h3>
+            <p>
+              Il nostro Bot su WhatsApp risponde H24 leggendo in tempo reale il
+              tuo calendario, alleggerendo drasticamente il carico di lavoro
+              della tua segreteria.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                FINANZA
+              </div>
+              <div style="margin: 0; font-size: 1.8rem; line-height: 1">💳</div>
+            </div>
+            <h3>Incasso Autonomo</h3>
+            <p>
+              L'integrazione nativa con Stripe richiede una caparra alla
+              prenotazione. Se il pagamento fallisce, lo slot si libera
+              automaticamente.
+            </p>
+          </div>
+
+          <div
+            class="lv-card"
+            style="
+              border-color: var(--lv-blue);
+              position: relative;
+              box-shadow: 0 10px 30px rgba(0, 82, 255, 0.05);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="
+                  margin: 0;
+                  font-size: 0.7rem;
+                  letter-spacing: 1px;
+                  background: var(--lv-blue);
+                  color: #fff;
+                "
+              >
+                IN ARRIVO
+              </div>
+              <div style="margin: 0; font-size: 1.8rem; line-height: 1">🎙️</div>
+            </div>
+            <h3>Voice Agent AI</h3>
+            <p>
+              Il centralino che non dorme mai. Risponde in linguaggio naturale,
+              fissa appuntamenti sul calendario e filtra i perditempo, gestendo
+              fino a 50 chiamate in simultanea.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section lv-section-surface">
+      <div class="lv-container">
+        <div class="lv-flow-container">
+          <div style="text-align: center">
+            <h2 class="lv-h2" style="color: #fff">
+              Il Protocollo Anti No-Show
+            </h2>
+            <p style="color: #a9b7c6; font-size: 1.1rem">
+              Come blindiamo il tuo fatturato, automaticamente.
+            </p>
+          </div>
+
+          <div class="lv-flow-grid">
+            <div class="lv-flow-step">
+              <div class="lv-flow-icon">🗓️</div>
+              <h4>1. Prenotazione</h4>
+              <p>Il cliente prenota da Maps o Instagram.</p>
+            </div>
+
+            <div class="lv-flow-step critical">
+              <div class="lv-flow-icon">🔒</div>
+              <h4>2. Caparra Stripe</h4>
+              <p>Il sistema blocca lo slot solo a pagamento avvenuto.</p>
+            </div>
+
+            <div class="lv-flow-step">
+              <div class="lv-flow-icon">📱</div>
+              <h4>3. Smart Reminder</h4>
+              <p>
+                SMS automatico 24h prima. Il cliente può confermare o disdire
+                con un click.
+              </p>
+            </div>
+
+            <div class="lv-flow-step critical">
+              <div class="lv-flow-icon">♻️</div>
+              <h4>4. Auto-Reschedule</h4>
+              <p>
+                Se disdice, LV-OS riapre lo slot su Google e lo propone in
+                automatico alla lista d'attesa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section" id="audit">
+      <div class="lv-container">
+        <div class="lv-audit-wrapper">
+          <div style="text-align: center; margin-bottom: 2.5rem">
+            <div class="lv-badge">Scansione Infrastrutturale</div>
+            <h2 class="lv-h2">Esegui un Audit Architetturale</h2>
+            <p class="lv-text-muted">
+              Scopri esattamente dove il tuo business sta perdendo efficienza
+              operativa. Compila i dati, il nostro sistema analizzerà i tuoi
+              colli di bottiglia.
+            </p>
+          </div>
+
+          <form id="blueprint-form">
+            <div class="lv-form-group">
+              <label
+                style="
+                  color: #a9b7c6;
+                  font-family: &quot;Courier New&quot;, monospace;
+                  font-size: 0.85rem;
+                  text-transform: uppercase;
+                "
+                >> URL Sito Web / Nome Azienda</label
+              >
+              <input
+                type="text"
+                id="company"
+                class="lv-form-control"
+                style="
+                  background: #111;
+                  border: 1px solid #333;
+                  color: #00a3ff;
+                  font-family: &quot;Courier New&quot;, monospace;
+                "
+                required
+                placeholder="es. www.miosito.it"
+              />
+            </div>
+
+            <div
+              class="lv-grid-2"
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
+            >
+              <div class="lv-form-group">
+                <label
+                  style="
+                    color: #a9b7c6;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                  "
+                  >> Numero WhatsApp (Per l'invio del Report)</label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  class="lv-form-control"
+                  style="
+                    background: #111;
+                    border: 1px solid #333;
+                    color: #00a3ff;
+                    font-family: &quot;Courier New&quot;, monospace;
+                  "
+                  required
+                  placeholder="es. +39 333 1234567"
+                />
+              </div>
+
+              <div class="lv-form-group">
+                <label
+                  style="
+                    color: #a9b7c6;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                  "
+                  >> Email Aziendale</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="lv-form-control"
+                  style="
+                    background: #111;
+                    border: 1px solid #333;
+                    color: #00a3ff;
+                    font-family: &quot;Courier New&quot;, monospace;
+                  "
+                  required
+                  placeholder="es. info@tuolocale.it"
+                />
+              </div>
+            </div>
+
+            <div
+              class="lv-grid-2"
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
+            >
+              <div class="lv-form-group">
+                <label
+                  style="
+                    color: #a9b7c6;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                  "
+                  >> Software Attuale</label
+                >
+                <select
+                  id="software"
+                  class="lv-form-control lv-form-select"
+                  style="
+                    background-color: #111;
+                    border: 1px solid #333;
+                    color: #00a3ff;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    background-image: url(&quot;data:image/svg+xml;utf8,<svg fill=%22%2300a3ff%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>&quot;);
+                  "
+                >
+                  <option value="nessuno">Nessuno / Agenda Cartacea</option>
+                  <option value="treatwell">Treatwell / TheFork</option>
+                  <option value="legacy">Software Locale (es. Panacea)</option>
+                  <option value="cloud">Software Cloud (es. Phorest)</option>
+                </select>
+              </div>
+
+              <div class="lv-form-group">
+                <label
+                  style="
+                    color: #a9b7c6;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                  "
+                  >> Fatturato Annuale (Stima)</label
+                >
+                <select
+                  id="revenue"
+                  class="lv-form-control lv-form-select"
+                  style="
+                    background-color: #111;
+                    border: 1px solid #333;
+                    color: #00a3ff;
+                    font-family: &quot;Courier New&quot;, monospace;
+                    background-image: url(&quot;data:image/svg+xml;utf8,<svg fill=%22%2300a3ff%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>&quot;);
+                  "
+                >
+                  <option value="under50k">< 50.000 €</option>
+                  <option value="50-150k">50.000 € - 150.000 €</option>
+                  <option value="150-500k">150.000 € - 500.000 €</option>
+                  <option value="over500k">> 500.000 €</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="lv-btn-submit"
+              id="audit-btn"
+              style="
+                background: var(--lv-blue);
+                border: 1px solid #00a3ff;
+                box-shadow: 0 0 20px rgba(0, 82, 255, 0.4);
+                margin-top: 1.5rem;
+              "
+            >
+              <span
+                id="audit-btn-text"
+                style="
+                  font-family: &quot;Courier New&quot;, monospace;
+                  font-weight: 800;
+                  letter-spacing: 1px;
+                "
+                >[ ESEGUI_SCANSIONE_AI ]</span
+              >
+            </button>
+            <p
+              style="
+                text-align: center;
+                font-size: 0.75rem;
+                color: #555;
+                margin-top: 1.5rem;
+                font-family: &quot;Courier New&quot;, monospace;
+              "
+            >
+              <span style="color: var(--lv-green)">●</span> CONNESSIONE
+              CRITTOGRAFATA AL CLUSTER DI ELABORAZIONE
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document
+        .getElementById("blueprint-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const btn = document.getElementById("audit-btn");
+          const btnText = document.getElementById("audit-btn-text");
+
+          btnText.innerText = "Analisi in corso...";
+          btn.style.opacity = "0.7";
+
+          const payload = {
+            company: document.getElementById("company").value,
+            software: document.getElementById("software").value,
+            revenue: document.getElementById("revenue").value,
+            painpoint: document.getElementById("painpoint").value,
+            timestamp: new Date().toISOString(),
+          };
+
+          // Sostituisci con il vero webhook n8n
+          const WEBHOOK_URL = "https://n8n.tuodominio.com/webhook/audit-form";
+
+          try {
+            /* Scommentare in produzione:
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        */
+
+            // Simulazione caricamento
+            setTimeout(() => {
+              btnText.innerText = "Dati Ricevuti. Ti contatteremo a breve.";
+              btn.style.background = "var(--lv-green)";
+              btn.style.opacity = "1";
+            }, 1500);
+          } catch (error) {
+            btnText.innerText = "Errore di connessione.";
+            btn.style.background = "var(--lv-alert)";
+          }
+        });
+    </script>
+    <script src="js/components.js"></script>
+  </body>
+</html>

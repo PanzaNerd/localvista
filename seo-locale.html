@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local SEO & Google Maps | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --lv-alert: #c4371c;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-green-light);
+        color: var(--lv-green-dark);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+      }
+      .lv-highlight {
+        color: transparent;
+        background: linear-gradient(
+          90deg,
+          var(--lv-green),
+          var(--lv-green-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       HERO & GRID PILASTRI
+       ========================================== */
+      .lv-page-hero {
+        padding: 160px 0 80px 0;
+        text-align: center;
+        background: radial-gradient(
+          ellipse at bottom,
+          var(--lv-green-light) 0%,
+          var(--lv-bg-main) 100%
+        );
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-hero-p {
+        font-size: 1.2rem;
+        color: var(--lv-text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem auto;
+      }
+
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .lv-card {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        padding: 2.5rem 2rem;
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+      }
+      .lv-card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        padding: 15px;
+        background: var(--lv-bg-surface);
+        border-radius: var(--radius-sm);
+      }
+      .lv-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+      .lv-card p {
+        color: var(--lv-text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* ==========================================
+       MAPS LOSS CALCULATOR (UI)
+       ========================================== */
+      .lv-calculator-section {
+        background-color: var(--lv-bg-main);
+        padding: 4rem 0;
+      }
+      .lv-calc-container {
+        background: #111;
+        color: #fff;
+        border-radius: var(--radius-lg);
+        padding: 4rem;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        border: 1px solid #333;
+      }
+      .lv-calc-header h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+      .lv-calc-header p {
+        color: #a9b7c6;
+        font-size: 1.1rem;
+      }
+
+      .lv-input-group {
+        margin-bottom: 2rem;
+      }
+      .lv-input-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #fff;
+      }
+      .lv-range-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .lv-range {
+        flex: 1;
+        accent-color: var(--lv-green);
+      }
+      .lv-val-display {
+        background: #222;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 800;
+        min-width: 100px;
+        text-align: center;
+        border: 1px solid #444;
+      }
+
+      .lv-result-box {
+        background: rgba(196, 55, 28, 0.05); /* Schiarito il rosso di fondo */
+        border: 1px solid rgba(196, 55, 28, 0.3); /* Bordo più elegante */
+        border-radius: var(--radius-md);
+        padding: 3rem 2rem; /* Aumentato il padding verticale per dare respiro */
+        text-align: center;
+      }
+
+      .lv-result-title {
+        color: #fff;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+      }
+      .lv-result-amount {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #fff;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+      .lv-result-title-alert {
+        color: var(--lv-alert);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .lv-result-amount-alert {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: var(--lv-alert);
+        line-height: 1;
+        margin-bottom: 2.5rem; /* Più spazio prima del bottone */
+      }
+      .lv-result-note {
+        color: #888; /* Grigio più morbido */
+        font-size: 0.8rem;
+        margin-top: 1.5rem; /* Più spazio dopo il bottone */
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        line-height: 1.4;
+      }
+
+      .lv-btn-massive {
+        display: block;
+        background: var(--lv-green);
+        color: #fff;
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        transition: background 0.3s;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        padding: 16px;
+      }
+      .lv-btn-massive:hover {
+        background: var(--lv-green-dark);
+      }
+
+      @media (max-width: 992px) {
+        .lv-calc-container {
+          grid-template-columns: 1fr;
+          padding: 2rem;
+          gap: 2rem;
+        }
+      }
+
+      /* ==========================================
+       THE SMOKING GUN (Visual Proof)
+       ========================================== */
+      .lv-proof-section {
+        padding: 4rem 0 6rem 0;
+        background: var(--lv-bg-main);
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-proof-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .lv-proof-copy h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -1px;
+      }
+      .lv-proof-copy p {
+        font-size: 1.1rem;
+        color: var(--lv-text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .lv-mockup-phone {
+        background: var(--lv-bg-surface);
+        border: 8px solid #111;
+        border-radius: 30px;
+        padding: 1.5rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+      .lv-search-bar {
+        background: #fff;
+        padding: 12px;
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        font-size: 0.9rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1rem;
+        border: 1px solid var(--lv-border);
+      }
+      .lv-map-placeholder {
+        background-color: #e8eaed;
+        background-image:
+          linear-gradient(#d5d7d9 1px, transparent 1px),
+          linear-gradient(90deg, #d5d7d9 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: center center;
+        height: 120px;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #dadce0;
+      }
+      /* Aggiungiamo un cerchio blu sotto il pin per fare "Effetto Google" */
+      .lv-map-placeholder::after {
+        content: "";
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: rgba(66, 133, 244, 0.2);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .lv-map-listing {
+        background: #fff;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 0.8rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        border: 1px solid var(--lv-border);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .lv-map-listing.winner {
+        border: 2px solid var(--lv-green);
+        box-shadow: 0 8px 20px rgba(27, 138, 90, 0.15);
+        transform: scale(1.02);
+        position: relative;
+      }
+      .lv-winner-badge {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background: var(--lv-green);
+        color: #fff;
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+
+      .lv-listing-title {
+        font-weight: 800;
+        font-size: 0.95rem;
+        color: var(--lv-text-main);
+      }
+      .lv-listing-stars {
+        color: #fbbc04;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      .lv-listing-data {
+        font-size: 0.75rem;
+        color: #888;
+      }
+
+      .lv-graveyard-btn {
+        display: block;
+        text-align: center;
+        color: var(--lv-text-main);
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 10px;
+        border-top: 1px solid var(--lv-border);
+        margin-top: 0.5rem;
+      }
+
+      @media (max-width: 992px) {
+        .lv-proof-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .lv-mockup-phone {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-page-hero">
+      <div class="lv-container">
+        <div class="lv-badge">Dominio Geografico</div>
+        <h1 class="lv-h1">
+          Intercetta chi ha <span class="lv-highlight">già deciso</span> di
+          comprare.
+        </h1>
+        <p class="lv-hero-p">
+          Il 50% dei clic su Google Maps finisce esclusivamente nelle prime 3
+          posizioni. Se sei quarto o inferiore, stai letteralmente regalando
+          fatturato alla concorrenza. Noi decodifichiamo l'algoritmo per
+          portarti in cima.
+        </p>
+      </div>
+    </header>
+
+    <section class="lv-proof-section">
+      <div class="lv-container">
+        <div class="lv-proof-grid">
+          <div class="lv-proof-copy">
+            <div
+              class="lv-badge"
+              style="
+                background: var(--lv-bg-surface);
+                color: var(--lv-text-main);
+                border: 1px solid var(--lv-border);
+              "
+            >
+              La Psicologia del Clic
+            </div>
+            <h2>La linea sottile tra dominare e chiudere.</h2>
+            <p>
+              Quando un potenziale cliente cerca "Dentista urgente" o
+              "Parrucchiere vicino a me", Google gli mostra una mappa e
+              <strong>solo 3 attività</strong>. Questo blocco si chiama
+              <em>Local 3-Pack</em>.
+            </p>
+            <p>
+              La cruda statistica? Il 70% degli utenti non clicca mai su "Vedi
+              tutti". Sceglie una di quelle tre attività entro 5 secondi.
+            </p>
+            <p style="color: var(--lv-alert); font-weight: 700">
+              Se la tua azienda è nascosta dietro quel pulsante, il tuo sito web
+              bellissimo e i tuoi social non servono a nulla. Il cliente è già
+              andato dal tuo concorrente.
+            </p>
+          </div>
+
+          <div class="lv-mockup-phone">
+            <div class="lv-search-bar">🔍 Servizio richiesto + Tua Città</div>
+            <div class="lv-map-placeholder">
+              <span style="font-size: 2rem">📍</span>
+            </div>
+
+            <div class="lv-map-listing winner">
+              <div class="lv-winner-badge">La tua Attività (LV-OS)</div>
+              <div class="lv-listing-title">Il Tuo Business S.r.l.</div>
+              <div class="lv-listing-stars">5.0 ⭐⭐⭐⭐⭐ (248)</div>
+              <div class="lv-listing-data">
+                Aperto ora · Prenotazione Diretta
+              </div>
+            </div>
+
+            <div class="lv-map-listing">
+              <div class="lv-listing-title">Concorrente Uno</div>
+              <div class="lv-listing-stars">4.2 ⭐⭐⭐⭐ (45)</div>
+              <div class="lv-listing-data">Aperto ora · Chiuso tra 30 min</div>
+            </div>
+
+            <div class="lv-map-listing">
+              <div class="lv-listing-title">Concorrente Due</div>
+              <div class="lv-listing-stars">3.8 ⭐⭐⭐ (12)</div>
+              <div class="lv-listing-data">Chiuso temporaneamente</div>
+            </div>
+
+            <div class="lv-graveyard-btn">Vedi tutti i risultati ➔</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-calculator-section">
+      <div class="lv-container">
+        <div class="lv-calc-container">
+          <div class="lv-calc-inputs">
+            <div class="lv-calc-header">
+              <h2>
+                Calcola quanto stai
+                <span style="color: var(--lv-alert)">perdendo</span>.
+              </h2>
+              <p style="margin-bottom: 2rem">
+                Inserisci i dati della tua attività per scoprire il costo
+                occulto di un posizionamento fuori dalla Top 3 di Google Maps.
+              </p>
+            </div>
+
+            <div class="lv-input-group">
+              <label
+                >Ricerche mensili stimate per il tuo servizio in città:</label
+              >
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="searchVolume"
+                  class="lv-range"
+                  min="100"
+                  max="5000"
+                  step="100"
+                  value="1000"
+                />
+                <div class="lv-val-display"><span id="volVal">1000</span></div>
+              </div>
+            </div>
+
+            <div class="lv-input-group">
+              <label>Valore medio (scontrino) di un cliente (€):</label>
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="ticketValue"
+                  class="lv-range"
+                  min="20"
+                  max="500"
+                  step="10"
+                  value="80"
+                />
+                <div class="lv-val-display">
+                  €<span id="ticketVal">80</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lv-calc-outputs">
+            <div class="lv-result-box">
+              <div class="lv-result-title">
+                Fatturato perso stimato (Mensile)
+              </div>
+              <div class="lv-result-amount">
+                €<span id="lostRevenue">0</span>
+              </div>
+
+              <div class="lv-result-title-alert">Emorragia Annuale</div>
+              <div class="lv-result-amount-alert">
+                €<span id="lostRevenueYear">0</span>
+              </div>
+
+              <a href="automazione.html#audit" class="lv-btn-massive"
+                >Ferma l'Emorragia Ora</a
+              >
+
+              <div class="lv-result-note">
+                Calcolo basato su un tasso di conversione prudenziale del 10%.
+                La Top 3 assorbe il 50% del traffico, chi è fuori raccoglie solo
+                le briciole.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section lv-section-surface">
+      <div class="lv-container">
+        <div style="text-align: center">
+          <h2 class="lv-h2">Il Protocollo di Dominio in 3 Fasi</h2>
+          <p class="lv-text-muted" style="margin-bottom: 3rem">
+            Non è creatività. È un'infrastruttura ingegneristica per forzare
+            l'algoritmo di Google Maps.
+          </p>
+        </div>
+
+        <div class="lv-grid-3">
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                FASE 01
+              </div>
+              <div
+                class="lv-card-icon"
+                style="
+                  margin: 0;
+                  padding: 12px;
+                  font-size: 1.5rem;
+                  line-height: 1;
+                "
+              >
+                📍
+              </div>
+            </div>
+            <h3>Dominio Geografico Unificato</h3>
+            <p>
+              Nome, Indirizzo e Telefono devono coincidere ovunque. Diffondiamo
+              e blocchiamo i tuoi dati aziendali su decine di directory e
+              aggregatori (Yelp, Apple Maps, PagineGialle). Google premia questa
+              coerenza assoluta posizionandoti in alto.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                FASE 02
+              </div>
+              <div
+                class="lv-card-icon"
+                style="
+                  margin: 0;
+                  padding: 12px;
+                  font-size: 1.5rem;
+                  line-height: 1;
+                "
+              >
+                ⚙️
+              </div>
+            </div>
+            <h3>Ingegneria del Profilo</h3>
+            <p>
+              Compiliamo ogni singolo attributo nascosto del tuo Profilo
+              Attività. Implementiamo categorie secondarie strategiche, Q&A
+              pre-caricate e tracciamento UTM per misurare esattamente quante
+              chiamate e prenotazioni genera la mappa.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <div
+                class="lv-badge"
+                style="margin: 0; font-size: 0.7rem; letter-spacing: 1px"
+              >
+                FASE 03
+              </div>
+              <div
+                class="lv-card-icon"
+                style="
+                  margin: 0;
+                  padding: 12px;
+                  font-size: 1.5rem;
+                  line-height: 1;
+                "
+              >
+                ⭐
+              </div>
+            </div>
+            <h3>AI Reputation Loop</h3>
+            <p>
+              La quantità di recensioni e la velocità di risposta dettano la
+              classifica. Il nostro sistema richiede feedback via SMS in
+              automatico a fine visita e la nostra IA risponde inserendo le
+              giuste parole chiave locali per nutrire l'algoritmo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const volInput = document.getElementById("searchVolume");
+        const ticketInput = document.getElementById("ticketValue");
+        const volDisplay = document.getElementById("volVal");
+        const ticketDisplay = document.getElementById("ticketVal");
+        const revenueDisplay = document.getElementById("lostRevenue");
+        const revenueYearDisplay = document.getElementById("lostRevenueYear");
+
+        function calculateLoss() {
+          const volume = parseInt(volInput.value);
+          const ticket = parseInt(ticketInput.value);
+
+          volDisplay.textContent = volume.toLocaleString("it-IT");
+          ticketDisplay.textContent = ticket.toLocaleString("it-IT");
+
+          const trafficLost = volume * 0.4;
+          const conversionRate = 0.1;
+          const lostClients = trafficLost * conversionRate;
+
+          const lostRev = Math.round(lostClients * ticket);
+          const lostRevYear = lostRev * 12;
+
+          revenueDisplay.textContent = lostRev.toLocaleString("it-IT");
+          revenueYearDisplay.textContent = lostRevYear.toLocaleString("it-IT");
+        }
+
+        volInput.addEventListener("input", calculateLoss);
+        ticketInput.addEventListener("input", calculateLoss);
+
+        calculateLoss();
+      });
+    </script>
+    <script src="js/components.js"></script>
+  </body>
+</html>

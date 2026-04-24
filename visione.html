@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Il Manifesto | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-text-main);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1.5px;
+        margin-bottom: 1.5rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-highlight {
+        color: transparent;
+        background: linear-gradient(
+          90deg,
+          var(--lv-green),
+          var(--lv-green-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       HERO (Dark & Aggressive)
+       ========================================== */
+      .lv-manifesto-hero {
+        padding: 180px 0 100px 0;
+        background: #111;
+        color: #fff;
+        text-align: center;
+        border-bottom: 4px solid var(--lv-green);
+      }
+      .lv-hero-p {
+        font-size: 1.3rem;
+        color: #a9b7c6;
+        max-width: 800px;
+        margin: 0 auto 2rem auto;
+        font-weight: 400;
+      }
+
+      /* ==========================================
+       THE 3 RULES (Il Manifesto)
+       ========================================== */
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-rule-block {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        gap: 2rem;
+        margin-bottom: 4rem;
+        align-items: start;
+      }
+      .lv-rule-num {
+        font-size: 4rem;
+        font-weight: 900;
+        color: var(--lv-green-light);
+        line-height: 0.8;
+      }
+      .lv-rule-content h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: var(--lv-text-main);
+      }
+      .lv-rule-content p {
+        font-size: 1.1rem;
+        color: var(--lv-text-muted);
+        line-height: 1.7;
+      }
+
+      /* ==========================================
+       THE ARCHITECTS (I Fondatori)
+       ========================================== */
+      .lv-architects-section {
+        background: var(--lv-bg-surface);
+        border-top: 1px solid var(--lv-border);
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .lv-architect-card {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+      }
+      .lv-arch-img-placeholder {
+        height: 300px;
+        background: #222;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #555;
+        font-weight: 800;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .lv-arch-info {
+        padding: 2.5rem;
+      }
+      .lv-arch-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+      }
+      .lv-arch-role {
+        color: var(--lv-green);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+      .lv-tech-stack {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--lv-border);
+      }
+      .lv-tech-tag {
+        background: var(--lv-bg-surface);
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: monospace;
+        color: var(--lv-text-muted);
+        border: 1px solid var(--lv-border);
+      }
+
+      /* ==========================================
+       CTA FINALE
+       ========================================== */
+      .lv-cta-section {
+        text-align: center;
+        padding: 8rem 0;
+        background: var(--lv-bg-main);
+      }
+      .lv-btn-massive {
+        display: inline-block;
+        background: var(--lv-green);
+        color: #fff;
+        padding: 22px 45px;
+        font-size: 1.3rem;
+        font-weight: 800;
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        margin-top: 2.5rem;
+        box-shadow: 0 10px 30px rgba(27, 138, 90, 0.3);
+        border: 2px solid var(--lv-green);
+      }
+      .lv-btn-massive:hover {
+        background: var(--lv-green-dark);
+        border-color: var(--lv-green-dark);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(27, 138, 90, 0.5);
+      }
+
+      @media (max-width: 992px) {
+        .lv-grid-2 {
+          grid-template-columns: 1fr;
+        }
+        .lv-rule-block {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .lv-rule-num {
+          font-size: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-manifesto-hero">
+      <div class="lv-container">
+        <div
+          class="lv-badge"
+          style="
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+          "
+        >
+          System Integrators
+        </div>
+        <h1 class="lv-h1">
+          Non facciamo "Marketing".<br />Costruiamo
+          <span style="color: var(--lv-green)">Infrastrutture.</span>
+        </h1>
+        <p class="lv-hero-p">
+          Siamo nati per risolvere un'anomalia di mercato: multinazionali che
+          tengono in ostaggio i dati dei piccoli imprenditori. È il momento di
+          riprenderti le chiavi della tua azienda.
+        </p>
+      </div>
+    </header>
+
+    <section class="lv-section">
+      <div class="lv-container" style="max-width: 800px">
+        <div style="text-align: center; margin-bottom: 5rem">
+          <h2 class="lv-h2">Le 3 Regole di LocalVista OS</h2>
+        </div>
+
+        <div class="lv-rule-block">
+          <div class="lv-rule-num">01</div>
+          <div class="lv-rule-content">
+            <h3>Il Database è sacro e intoccabile.</h3>
+            <p>
+              Treatwell, TheFork e i vecchi gestionali cloud ti affittano i TUOI
+              clienti. Se smetti di pagarli, perdi l'accesso al tuo storico. Noi
+              installiamo architetture cloud proprietarie dove tu sei l'unico
+              amministratore dei dati. Nessun "Lock-in" tecnologico.
+            </p>
+          </div>
+        </div>
+
+        <div class="lv-rule-block">
+          <div class="lv-rule-num">02</div>
+          <div class="lv-rule-content">
+            <h3>Ingegneria batte Speranza.</h3>
+            <p>
+              Le agenzie tradizionali vendono speranza ("Facciamo due post su
+              Facebook e speriamo che la gente chiami"). Noi vendiamo
+              matematica. Intercettiamo la domanda attiva su Maps,
+              automatizziamo la risposta con l'AI e blindiamo l'incasso con
+              Stripe. Zero "creatività" inutile, solo flussi logici misurabili.
+            </p>
+          </div>
+        </div>
+
+        <div class="lv-rule-block">
+          <div class="lv-rule-num">03</div>
+          <div class="lv-rule-content">
+            <h3>La Tecnologia deve essere invisibile.</h3>
+            <p>
+              Il più grande ostacolo alla digitalizzazione è il personale che
+              rifiuta i nuovi strumenti. Per questo non ti chiediamo di buttare
+              il tuo vecchio gestionale. Costruiamo "middleware" (ponti logici)
+              in background. Il tuo staff continua a lavorare come sempre, ma i
+              risultati si moltiplicano.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section lv-architects-section">
+      <div class="lv-container">
+        <div style="text-align: center; margin-bottom: 4rem">
+          <h2 class="lv-h2">I System Architects</h2>
+          <p class="lv-text-muted">
+            Parla con chi scrive il codice, non con chi ti vende i pacchetti.
+          </p>
+        </div>
+
+        <div class="lv-grid-2">
+          <div class="lv-architect-card">
+            <div class="lv-arch-img-placeholder">[Foto Matthias]</div>
+            <div class="lv-arch-info">
+              <div class="lv-arch-name">Matthias</div>
+              <span class="lv-arch-role">Co-Founder & Lead Engineer</span>
+              <p style="color: var(--lv-text-muted); font-size: 0.95rem">
+                Progetta l'architettura logica e i flussi di automazione. La sua
+                ossessione è abbattere i costi operativi delle aziende locali
+                creando ponti tra sistemi che, normalmente, non si parlerebbero
+                mai.
+              </p>
+
+              <div class="lv-tech-stack">
+                <span class="lv-tech-tag">Data Architecture</span>
+                <span class="lv-tech-tag">API Integration</span>
+                <span class="lv-tech-tag">Workflow Automation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lv-architect-card">
+            <div class="lv-arch-img-placeholder">[Foto Jacopo]</div>
+            <div class="lv-arch-info">
+              <div class="lv-arch-name">Jacopo</div>
+              <span class="lv-arch-role">Co-Founder & AI Specialist</span>
+              <p style="color: var(--lv-text-muted); font-size: 0.95rem">
+                Supervisiona l'integrazione dei modelli linguistici e il
+                posizionamento semantico. Sviluppa gli agenti conversazionali
+                (WhatsApp/Voice) per automatizzare il customer care e
+                l'intercettazione su Maps.
+              </p>
+
+              <div class="lv-tech-stack">
+                <span class="lv-tech-tag">LLM Orchestration</span>
+                <span class="lv-tech-tag">Semantic Search</span>
+                <span class="lv-tech-tag">Conversational AI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-cta-section">
+      <div class="lv-container">
+        <h2 class="lv-h1" style="margin-bottom: 0.5rem">
+          Smetti di delegare al caso.
+        </h2>
+        <p
+          class="lv-text-muted"
+          style="font-size: 1.2rem; max-width: 600px; margin: 0 auto"
+        >
+          L'intelligenza artificiale sta dividendo il mercato in due: chi la usa
+          per scalare, e chi la subisce chiudendo. Scegli da che parte stare.
+        </p>
+        <a href="automazione.html#audit" class="lv-btn-massive"
+          >Prenota la Sessione di Progettazione</a
+        >
+        <p style="margin-top: 1rem; font-size: 0.85rem; color: #888">
+          Nessun commerciale. Parlerai direttamente con Matthias o Jacopo.
+        </p>
+      </div>
+    </section>
+    <script src="js/components.js"></script>
+  </body>
+</html>

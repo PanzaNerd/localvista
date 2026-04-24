@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automazione per Saloni di Bellezza | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV (Master Template)
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --lv-alert: #c4371c;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-text-main);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-highlight {
+        color: transparent;
+        background: linear-gradient(
+          90deg,
+          var(--lv-green),
+          var(--lv-green-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       HERO & INTEGRATIONS BANNER
+       ========================================== */
+      .lv-page-hero {
+        padding: 160px 0 60px 0;
+        text-align: center;
+        background: radial-gradient(
+          ellipse at top,
+          var(--lv-green-light) 0%,
+          var(--lv-bg-main) 100%
+        );
+      }
+      .lv-hero-p {
+        font-size: 1.2rem;
+        color: var(--lv-text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem auto;
+      }
+
+      .lv-integration-banner {
+        border-top: 1px solid var(--lv-border);
+        border-bottom: 1px solid var(--lv-border);
+        padding: 1.5rem 0;
+        background: var(--lv-bg-surface);
+        text-align: center;
+      }
+      .lv-integration-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #888;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+      }
+      .lv-integration-logos {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        align-items: center;
+        font-weight: 800;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        opacity: 0.6;
+      }
+      .lv-integration-logos span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* ==========================================
+       CALCULATOR (SALON ADAPTED)
+       ========================================== */
+      .lv-calculator-section {
+        padding: 5rem 0;
+      }
+      .lv-calc-wrapper {
+        background: #111;
+        border-radius: var(--radius-lg);
+        padding: 3rem;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        color: #fff;
+        border: 1px solid #333;
+      }
+
+      .lv-input-group {
+        margin-bottom: 2rem;
+      }
+      .lv-input-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #fff;
+      }
+      .lv-range-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .lv-range {
+        flex: 1;
+        accent-color: var(--lv-alert);
+      }
+      .lv-val-display {
+        background: #222;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 800;
+        min-width: 90px;
+        text-align: center;
+        border: 1px solid #444;
+      }
+
+      .lv-calc-outputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 3rem;
+        border-left: 1px solid #333;
+      }
+      .lv-output-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #a9b7c6;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .lv-output-val {
+        font-size: 3.5rem;
+        font-weight: 900;
+        line-height: 1;
+        color: var(--lv-alert);
+        margin-bottom: 0.5rem;
+      }
+
+      /* ==========================================
+       PROTOCOLS GRID
+       ========================================== */
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .lv-card {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        padding: 2.5rem 2rem;
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        transition: transform 0.3s;
+      }
+      .lv-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--lv-green);
+      }
+      .lv-card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        padding: 15px;
+        background: var(--lv-bg-surface);
+        border-radius: var(--radius-sm);
+      }
+      .lv-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+      .lv-card p {
+        color: var(--lv-text-muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 992px) {
+        .lv-calc-wrapper {
+          grid-template-columns: 1fr;
+          padding: 2rem;
+          gap: 2rem;
+        }
+        .lv-calc-outputs {
+          padding-left: 0;
+          border-left: none;
+          border-top: 1px solid #333;
+          padding-top: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-page-hero">
+      <div class="lv-container">
+        <div class="lv-badge">Beauty & Wellness Edition</div>
+        <h1 class="lv-h1">
+          Sganciati da Treatwell.<br />Trattieni il
+          <span class="lv-highlight">100% dei margini</span>.
+        </h1>
+        <p class="lv-hero-p">
+          L'infrastruttura per Saloni e Centri Estetici. Intercettiamo chi ti
+          cerca su Google, dirottiamo le prenotazioni sul tuo canale
+          proprietario e azzeriamo le buche grazie alla caparra automatica.
+        </p>
+      </div>
+    </header>
+
+    <div class="lv-integration-banner">
+      <div class="lv-container">
+        <div class="lv-integration-title">
+          Si integra nativamente con il tuo ecosistema attuale
+        </div>
+        <div class="lv-integration-logos">
+          <span>🟣 Treatwell</span>
+          <span>⚫ Uala</span>
+          <span>🟢 Phorest</span>
+          <span>🔵 Primo Software</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="lv-section lv-section-surface">
+      <div class="lv-container">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h2 class="lv-h2">L'Emorragia dei Saloni</h2>
+          <p class="lv-text-muted">
+            Le piattaforme esterne sono ottime vetrine, ma dei pessimi soci in
+            affari. Calcola la tua perdita.
+          </p>
+        </div>
+
+        <div class="lv-calc-wrapper">
+          <div class="lv-calc-inputs">
+            <div class="lv-input-group">
+              <label>Appuntamenti mensili da piattaforme esterne</label>
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="b-bookings"
+                  class="lv-range"
+                  min="10"
+                  max="300"
+                  step="10"
+                  value="80"
+                />
+                <div class="lv-val-display">
+                  <span id="b-bookingsVal">80</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lv-input-group">
+              <label>Scontrino medio (es. Taglio/Colore)</label>
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="b-ticket"
+                  class="lv-range"
+                  min="15"
+                  max="150"
+                  step="5"
+                  value="60"
+                />
+                <div class="lv-val-display">
+                  €<span id="b-ticketVal">60</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lv-input-group">
+              <label>Commissione trattenuta (%)</label>
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="b-fee"
+                  class="lv-range"
+                  min="10"
+                  max="35"
+                  step="1"
+                  value="25"
+                />
+                <div class="lv-val-display"><span id="b-feeVal">25</span>%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lv-calc-outputs">
+            <div class="lv-output-title">Fatturato regalato ogni anno</div>
+            <div class="lv-output-val">€<span id="b-lossYear">0</span></div>
+            <p style="color: #a9b7c6; font-size: 0.9rem">
+              Liquidità sottratta direttamente all'utile netto del tuo salone,
+              sui tuoi stessi clienti di ritorno.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section">
+      <div class="lv-container">
+        <div style="text-align: center">
+          <h2 class="lv-h2">I 3 Protocolli per l'Indipendenza</h2>
+        </div>
+
+        <div class="lv-grid-3">
+          <div class="lv-card">
+            <div class="lv-card-icon">🔀</div>
+            <h3>Il Dirottamento Etico</h3>
+            <p>
+              Continua a usare Uala/Treatwell per acquisire clienti nuovi. Ma
+              dopo la prima visita, il nostro sistema invia un SMS automatico al
+              cliente per fargli scaricare la TUA web-app o fargli usare il
+              Tasto Blu di Google per le prenotazioni successive. L'acquisizione
+              la paghi una volta sola.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div class="lv-card-icon">⏳</div>
+            <h3>Recall Automatico "Colore"</h3>
+            <p>
+              Il sistema legge le tempistiche dei tuoi servizi. Dopo esatte 4
+              settimane da un trattamento tecnico (es. colore, laminazione), n8n
+              invia un messaggio WhatsApp personalizzato proponendo due slot
+              liberi in agenda per il ritocco. Riempi i tempi morti senza alzare
+              il telefono.
+            </p>
+          </div>
+
+          <div class="lv-card">
+            <div class="lv-card-icon">🛡️</div>
+            <h3>Scudo Anti-Buca (No-Show)</h3>
+            <p>
+              Una poltrona vuota è un costo fisso che non recuperi più.
+              Implementiamo il checkout Stripe obbligatorio al momento della
+              prenotazione. Se il cliente non paga la caparra in 15 minuti, lo
+              slot si rilibera automaticamente per altri. Elimina i perditempo
+              alla radice.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // JS Calcolatore Specifico Beauty
+      document.addEventListener("DOMContentLoaded", () => {
+        const b_bookingsInput = document.getElementById("b-bookings");
+        const b_ticketInput = document.getElementById("b-ticket");
+        const b_feeInput = document.getElementById("b-fee");
+
+        const b_bookingsVal = document.getElementById("b-bookingsVal");
+        const b_ticketVal = document.getElementById("b-ticketVal");
+        const b_feeVal = document.getElementById("b-feeVal");
+
+        const b_lossYear = document.getElementById("b-lossYear");
+
+        function calculateBeautyLoss() {
+          const b = parseInt(b_bookingsInput.value);
+          const t = parseInt(b_ticketInput.value);
+          const f = parseInt(b_feeInput.value) / 100;
+
+          b_bookingsVal.textContent = b;
+          b_ticketVal.textContent = t;
+          b_feeVal.textContent = (f * 100).toFixed(0);
+
+          const yearlyLoss = b * t * f * 12;
+          b_lossYear.textContent =
+            Math.round(yearlyLoss).toLocaleString("it-IT");
+        }
+
+        b_bookingsInput.addEventListener("input", calculateBeautyLoss);
+        b_ticketInput.addEventListener("input", calculateBeautyLoss);
+        b_feeInput.addEventListener("input", calculateBeautyLoss);
+
+        calculateBeautyLoss();
+      });
+    </script>
+    <script src="js/components.js"></script>
+  </body>
+</html>

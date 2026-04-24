@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero Commissioni | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV (Sincronizzato)
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --lv-alert: #c4371c;
+        --lv-alert-light: #fce8e5;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-green-light);
+        color: var(--lv-green-dark);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .lv-badge.alert {
+        background: var(--lv-alert-light);
+        color: var(--lv-alert);
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-highlight {
+        color: transparent;
+        background: linear-gradient(
+          90deg,
+          var(--lv-green),
+          var(--lv-green-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .lv-highlight-alert {
+        color: transparent;
+        background: linear-gradient(90deg, var(--lv-alert), #900);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       PAGE HERO (Tono aggressivo)
+       ========================================== */
+      .lv-page-hero {
+        padding: 160px 0 80px 0;
+        text-align: center;
+        background: radial-gradient(
+          ellipse at top,
+          var(--lv-alert-light) 0%,
+          var(--lv-bg-main) 80%
+        );
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-hero-p {
+        font-size: 1.2rem;
+        color: var(--lv-text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem auto;
+      }
+
+      /* ==========================================
+       VAMPIRE TAX CALCULATOR
+       ========================================== */
+      .lv-calculator-section {
+        background-color: var(--lv-bg-surface);
+        padding: 5rem 0;
+      }
+      .lv-calc-wrapper {
+        background: #fff;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--lv-border);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      .lv-calc-inputs {
+        padding: 4rem;
+        border-right: 1px solid var(--lv-border);
+      }
+      .lv-input-group {
+        margin-bottom: 2.5rem;
+      }
+      .lv-input-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--lv-text-main);
+        font-size: 1.1rem;
+      }
+      .lv-input-sub {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--lv-text-muted);
+        margin-bottom: 1rem;
+      }
+      .lv-range-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .lv-range {
+        flex: 1;
+        accent-color: var(--lv-alert);
+        height: 6px;
+      }
+      .lv-val-display {
+        background: var(--lv-bg-surface);
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 800;
+        min-width: 110px;
+        text-align: center;
+        border: 1px solid var(--lv-border);
+        color: var(--lv-alert);
+        font-size: 1.1rem;
+      }
+
+      .lv-calc-outputs {
+        padding: 4rem;
+        background: #111;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .lv-output-box {
+        margin-bottom: 2rem;
+      }
+      .lv-output-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #a9b7c6;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .lv-output-val {
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .lv-output-val.monthly {
+        color: #ffbd2e;
+        font-size: 2.5rem;
+      }
+      .lv-output-val.yearly {
+        color: #ff5f56;
+        font-size: 4rem;
+      }
+
+      .lv-saved-box {
+        background: rgba(27, 138, 90, 0.1);
+        border: 2px solid var(--lv-green);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        margin-top: 1rem;
+      }
+      .lv-saved-box .lv-output-title {
+        color: var(--lv-green);
+      }
+      .lv-saved-box .lv-output-val {
+        color: var(--lv-green);
+        font-size: 2rem;
+      }
+
+      /* ==========================================
+       ARCHITECTURE GRID
+       ========================================== */
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+      .lv-feature-text h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+      }
+      .lv-feature-text p {
+        font-size: 1.1rem;
+        color: var(--lv-text-muted);
+        margin-bottom: 1.5rem;
+      }
+
+      .lv-tech-card {
+        background: var(--lv-bg-surface);
+        border: 1px solid var(--lv-border);
+        border-radius: var(--radius-md);
+        padding: 2rem;
+        position: relative;
+      }
+      .lv-flow-diagram {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 800;
+        color: var(--lv-text-main);
+      }
+      .lv-flow-step {
+        text-align: center;
+      }
+      .lv-flow-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        background: #fff;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        margin: 0 auto 0.5rem auto;
+      }
+      .lv-flow-arrow {
+        color: var(--lv-green);
+        font-size: 1.5rem;
+      }
+
+      @media (max-width: 992px) {
+        .lv-calc-wrapper {
+          grid-template-columns: 1fr;
+        }
+        .lv-calc-inputs,
+        .lv-calc-outputs {
+          padding: 2rem;
+        }
+        .lv-grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-page-hero">
+      <div class="lv-container">
+        <div class="lv-badge alert">Stop al Data Lock-In</div>
+        <h1 class="lv-h1">
+          Smetti di pagare l'affitto sui
+          <span class="lv-highlight-alert">tuoi stessi clienti.</span>
+        </h1>
+        <p class="lv-hero-p">
+          Le piattaforme esterne ti portano il cliente la prima volta, ma ti
+          fanno pagare una tassa a vita su ogni suo ritorno. È il momento di
+          disintermediare e riprenderti il tuo database.
+        </p>
+      </div>
+    </header>
+
+    <section class="lv-calculator-section">
+      <div class="lv-container">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h2 class="lv-h2">Calcolatore della "Tassa Vampiro"</h2>
+          <p class="lv-text-muted">
+            Scopri quanto capitale stai bruciando ogni anno finanziando i
+            software altrui.
+          </p>
+        </div>
+
+        <div class="lv-calc-wrapper">
+          <div class="lv-calc-inputs">
+            <div class="lv-input-group">
+              <label>Prenotazioni mensili via piattaforma</label>
+              <span class="lv-input-sub"
+                >Quanti appuntamenti ricevi ogni mese da portali esterni?</span
+              >
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="bookings"
+                  class="lv-range"
+                  min="10"
+                  max="500"
+                  step="10"
+                  value="150"
+                />
+                <div class="lv-val-display">
+                  <span id="bookingsVal">150</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lv-input-group">
+              <label>Scontrino medio per appuntamento</label>
+              <span class="lv-input-sub"
+                >Quanto spende in media un cliente?</span
+              >
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="ticket"
+                  class="lv-range"
+                  min="10"
+                  max="300"
+                  step="5"
+                  value="50"
+                />
+                <div class="lv-val-display">
+                  €<span id="ticketVal">50</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lv-input-group">
+              <label>Commissione trattenuta (%)</label>
+              <span class="lv-input-sub"
+                >La percentuale che la piattaforma si tiene.</span
+              >
+              <div class="lv-range-wrapper">
+                <input
+                  type="range"
+                  id="fee"
+                  class="lv-range"
+                  min="5"
+                  max="35"
+                  step="1"
+                  value="25"
+                />
+                <div class="lv-val-display"><span id="feeVal">25</span>%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lv-calc-outputs">
+            <div class="lv-output-box">
+              <div class="lv-output-title">Emorragia Mensile</div>
+              <div class="lv-output-val monthly">
+                €<span id="lossMonth">0</span>
+              </div>
+            </div>
+
+            <div class="lv-output-box">
+              <div class="lv-output-title">
+                Tassa Vampiro Annuale (Soldi Persi)
+              </div>
+              <div class="lv-output-val yearly">
+                €<span id="lossYear">0</span>
+              </div>
+              <p style="color: #a9b7c6; font-size: 0.85rem; margin-top: 10px">
+                Questa è la liquidità pura che stai sottraendo ai tuoi margini
+                aziendali.
+              </p>
+            </div>
+
+            <div class="lv-saved-box">
+              <div class="lv-output-title">
+                Margine recuperato con LocalVista (5 Anni)
+              </div>
+              <div class="lv-output-val">€<span id="loss5Year">0</span></div>
+            </div>
+
+            <a
+              href="automazione.html#audit"
+              style="
+                display: block;
+                background: var(--lv-green);
+                color: #fff;
+                text-decoration: none;
+                border-radius: var(--radius-sm);
+                padding: 18px;
+                text-align: center;
+                font-weight: 800;
+                font-size: 1.15rem;
+                margin-top: 2.5rem;
+                box-shadow: 0 10px 30px rgba(27, 138, 90, 0.25);
+                border: 1px solid #20a069;
+                transition: transform 0.2s ease;
+              "
+            >
+              Taglia le Commissioni Oggi
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section">
+      <div class="lv-container">
+        <div class="lv-grid-2" style="margin-bottom: 6rem">
+          <div class="lv-feature-text">
+            <div class="lv-badge">L'Infrastruttura</div>
+            <h3>Il "Tasto Blu" di Google Maps.</h3>
+            <p>
+              Implementiamo l'integrazione ufficiale
+              <em>Reserve with Google</em> agganciando il tuo business al nostro
+              motore di prenotazione. Il cliente cerca la tua attività su Maps e
+              clicca su "Prenota" senza mai uscire da Google, senza creare
+              account e senza scaricare app terze.
+            </p>
+            <ul
+              style="
+                list-style: none;
+                color: var(--lv-text-muted);
+                padding-left: 0;
+              "
+            >
+              <li
+                style="
+                  margin-bottom: 12px;
+                  display: flex;
+                  align-items: flex-start;
+                  gap: 10px;
+                "
+              >
+                <span style="color: var(--lv-green); font-weight: bold"
+                  >✅</span
+                >
+                <span
+                  ><strong style="color: var(--lv-text-main)"
+                    >0% Commissioni</strong
+                  >
+                  sulle transazioni.</span
+                >
+              </li>
+              <li
+                style="
+                  margin-bottom: 12px;
+                  display: flex;
+                  align-items: flex-start;
+                  gap: 10px;
+                "
+              >
+                <span style="color: var(--lv-green); font-weight: bold"
+                  >✅</span
+                >
+                <span
+                  ><strong style="color: var(--lv-text-main)"
+                    >Dati di prima parte:</strong
+                  >
+                  Nome, telefono ed email vanno dritti nel tuo database
+                  proprietario.</span
+                >
+              </li>
+              <li style="display: flex; align-items: flex-start; gap: 10px">
+                <span style="color: var(--lv-green); font-weight: bold"
+                  >✅</span
+                >
+                <span
+                  ><strong style="color: var(--lv-text-main)"
+                    >Zero Attrito:</strong
+                  >
+                  Prenotazione confermata in 3 tap dallo smartphone.</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="lv-tech-card"
+            style="background: var(--lv-bg-surface); padding: 3rem 2rem"
+          >
+            <div
+              class="lv-flow-diagram"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <div class="lv-flow-step" style="text-align: center">
+                <div
+                  class="lv-flow-icon"
+                  style="
+                    background: #fff;
+                    width: 65px;
+                    height: 65px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    margin: 0 auto 10px auto;
+                    border: 1px solid var(--lv-border);
+                    font-size: 1.8rem;
+                  "
+                >
+                  📍
+                </div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  "
+                >
+                  Ricerca Google
+                </div>
+              </div>
+
+              <div
+                style="
+                  color: var(--lv-green);
+                  font-weight: 900;
+                  font-size: 1.2rem;
+                "
+              >
+                ➔
+              </div>
+
+              <div class="lv-flow-step" style="text-align: center">
+                <div
+                  class="lv-flow-icon"
+                  style="
+                    background: var(--lv-text-main);
+                    color: #fff;
+                    width: 75px;
+                    height: 75px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                    margin: 0 auto 10px auto;
+                    font-size: 2rem;
+                  "
+                >
+                  ⚡
+                </div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    color: var(--lv-text-main);
+                  "
+                >
+                  Motore LV-OS
+                </div>
+              </div>
+
+              <div
+                style="
+                  color: var(--lv-green);
+                  font-weight: 900;
+                  font-size: 1.2rem;
+                "
+              >
+                ➔
+              </div>
+
+              <div class="lv-flow-step" style="text-align: center">
+                <div
+                  class="lv-flow-icon"
+                  style="
+                    background: #fff;
+                    width: 65px;
+                    height: 65px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    margin: 0 auto 10px auto;
+                    border: 1px solid var(--lv-border);
+                    font-size: 1.8rem;
+                  "
+                >
+                  🗄️
+                </div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  "
+                >
+                  Tuo Database
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lv-grid-2">
+          <div
+            class="lv-tech-card"
+            style="
+              background: #111;
+              color: #fff;
+              border: none;
+              padding: 3rem 2rem;
+            "
+          >
+            <h4
+              style="
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                color: var(--lv-green);
+              "
+            >
+              Fase 1: L'Esca (Acquisizione)
+            </h4>
+            <p style="color: #a9b7c6; font-size: 0.95rem; margin-bottom: 2rem">
+              Usi i portali esterni (Treatwell/TheFork) solo come vetrina. Paghi
+              la commissione sul primo appuntamento per acquisire il cliente a
+              freddo.
+            </p>
+
+            <h4
+              style="
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                color: var(--lv-green);
+              "
+            >
+              Fase 2: Il Cavallo di Troia Offline
+            </h4>
+            <p style="color: #a9b7c6; font-size: 0.95rem; margin-bottom: 2rem">
+              Al momento del pagamento in cassa, aggiri le restrizioni del
+              portale offrendo un incentivo:
+              <em
+                >"Se prenoti la prossima visita ora scansionando questo QR code,
+                hai il 10% di sconto (o un upgrade gratuito)."</em
+              >
+            </p>
+
+            <h4
+              style="
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                color: var(--lv-green);
+              "
+            >
+              Fase 3: Loop Proprietario
+            </h4>
+            <p style="color: #a9b7c6; font-size: 0.95rem">
+              Il cliente prenota via LocalVista. I suoi dati entrano nel tuo
+              CRM. Da domani l'Intelligenza Artificiale gestirà i suoi richiami
+              via WhatsApp. Il portale esterno è tagliato fuori per sempre.
+            </p>
+          </div>
+
+          <div class="lv-feature-text">
+            <div
+              class="lv-badge"
+              style="
+                background: var(--lv-bg-surface);
+                color: var(--lv-text-main);
+                border: 1px solid var(--lv-border);
+              "
+            >
+              Gestione Obiezioni
+            </div>
+            <h3>Il Protocollo di Migrazione Ibrida.</h3>
+            <p>
+              La paura più grande è:
+              <em>"Se stacco le piattaforme, perdo i clienti"</em>. Sbagliato.
+              Non ti chiediamo di staccare la spina il Giorno 1.
+            </p>
+            <p>
+              Dato che le piattaforme blindano i dati dei clienti per non
+              farteli rubare, noi
+              <strong>usiamo il momento del checkout in negozio</strong>.
+              Costruiamo un ponte <em>Offline-to-Online</em> che disintermedia
+              il cliente mentre è fisicamente davanti a te.
+            </p>
+            <p
+              style="
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background: var(--lv-green-light);
+                border-left: 4px solid var(--lv-green);
+                border-radius: 0 8px 8px 0;
+              "
+            >
+              <strong
+                style="
+                  font-size: 1.1rem;
+                  color: var(--lv-green-dark);
+                  line-height: 1.5;
+                  display: block;
+                "
+              >
+                Il Risultato: Lasci a Treatwell/TheFork la commissione solo
+                sulla prima visita. Dalla seconda in poi, il cliente prenota sul
+                tuo sistema. Noi ti forniamo l'infrastruttura a costo fisso, il
+                100% degli incassi resta a te. Nessuna tassa occulta.
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const bookingsInput = document.getElementById("bookings");
+        const ticketInput = document.getElementById("ticket");
+        const feeInput = document.getElementById("fee");
+
+        const bookingsVal = document.getElementById("bookingsVal");
+        const ticketVal = document.getElementById("ticketVal");
+        const feeVal = document.getElementById("feeVal");
+
+        const lossMonth = document.getElementById("lossMonth");
+        const lossYear = document.getElementById("lossYear");
+        const loss5Year = document.getElementById("loss5Year");
+
+        function calculateTaxes() {
+          const b = parseInt(bookingsInput.value);
+          const t = parseInt(ticketInput.value);
+          const f = parseInt(feeInput.value) / 100;
+
+          // Update UI labels
+          bookingsVal.textContent = b;
+          ticketVal.textContent = t;
+          feeVal.textContent = (f * 100).toFixed(0);
+
+          // Core Logic
+          const monthlyRevenue = b * t;
+          const monthlyLoss = monthlyRevenue * f;
+          const yearlyLoss = monthlyLoss * 12;
+          const fiveYearLoss = yearlyLoss * 5;
+
+          // Update Displays
+          lossMonth.textContent =
+            Math.round(monthlyLoss).toLocaleString("it-IT");
+          lossYear.textContent = Math.round(yearlyLoss).toLocaleString("it-IT");
+          loss5Year.textContent =
+            Math.round(fiveYearLoss).toLocaleString("it-IT");
+        }
+
+        // Event Listeners
+        bookingsInput.addEventListener("input", calculateTaxes);
+        ticketInput.addEventListener("input", calculateTaxes);
+        feeInput.addEventListener("input", calculateTaxes);
+
+        // Init
+        calculateTaxes();
+      });
+    </script>
+    <script src="js/components.js"></script>
+  </body>
+</html>

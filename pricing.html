@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing & Infrastruttura | LocalVista OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+       GLOBAL & NAV
+       ========================================== */
+      :root {
+        --lv-green: #1b8a5a;
+        --lv-green-dark: #14694a;
+        --lv-green-light: #e8f5ee;
+        --lv-text-main: #1a1a1a;
+        --lv-text-muted: #555555;
+        --lv-bg-main: #ffffff;
+        --lv-bg-surface: #f7f7f5;
+        --lv-border: #e8e8e8;
+        --font-primary: "DM Sans", sans-serif;
+        --max-width: 1080px;
+        --max-width-lg: 1200px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: var(--lv-bg-main);
+        color: var(--lv-text-main);
+        line-height: 1.6;
+      }
+      .lv-container {
+        width: 100%;
+        max-width: var(--max-width-lg);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .lv-badge {
+        display: inline-block;
+        background: var(--lv-green-light);
+        color: var(--lv-green-dark);
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .lv-h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-h2 {
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+      }
+      .lv-highlight {
+        color: transparent;
+        background: linear-gradient(
+          90deg,
+          var(--lv-green),
+          var(--lv-green-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .lv-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--lv-border);
+        z-index: 100;
+        height: 70px;
+        display: flex;
+        align-items: center;
+      }
+      .lv-nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .lv-logo {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .lv-logo strong {
+        color: var(--lv-green);
+      }
+      .lv-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .lv-nav-links a {
+        text-decoration: none;
+        color: var(--lv-text-main);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .lv-btn-primary {
+        background: var(--lv-green);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+       HERO & PARADIGM SHIFT
+       ========================================== */
+      .lv-page-hero {
+        padding: 160px 0 60px 0;
+        text-align: center;
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-hero-p {
+        font-size: 1.2rem;
+        color: var(--lv-text-muted);
+        max-width: 700px;
+        margin: 0 auto 2rem auto;
+      }
+
+      .lv-paradigm-box {
+        background: var(--lv-bg-surface);
+        border-radius: var(--radius-md);
+        padding: 2rem;
+        max-width: 800px;
+        margin: 3rem auto 0 auto;
+        text-align: left;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        border: 1px solid var(--lv-border);
+      }
+      .lv-paradigm-col h4 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .lv-paradigm-col p {
+        font-size: 0.9rem;
+        color: var(--lv-text-muted);
+      }
+
+      /* ==========================================
+       PRICING TIERS
+       ========================================== */
+      .lv-section {
+        padding: 6rem 0;
+      }
+      .lv-pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        align-items: stretch;
+        margin-top: 3rem;
+      }
+
+      .lv-tier-card {
+        background: var(--lv-bg-main);
+        border: 1px solid var(--lv-border);
+        border-radius: var(--radius-lg);
+        padding: 3rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+      .lv-tier-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Sweet Spot (Tier 2) */
+      .lv-tier-card.popular {
+        border: 2px solid var(--lv-green);
+        box-shadow: 0 20px 40px rgba(27, 138, 90, 0.08);
+        transform: scale(1.03);
+        z-index: 5;
+      }
+      .lv-tier-card.popular:hover {
+        transform: scale(1.05);
+      }
+      .lv-popular-badge {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--lv-green);
+        color: #fff;
+        padding: 6px 20px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .lv-tier-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      .lv-tier-target {
+        font-size: 0.9rem;
+        color: var(--lv-text-muted);
+        min-height: 45px;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Prezzi */
+      .lv-pricing-block {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--lv-border);
+      }
+      .lv-price-monthly {
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        color: var(--lv-text-main);
+      }
+      .lv-price-monthly span {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--lv-text-muted);
+      }
+      .lv-price-setup {
+        font-size: 0.85rem;
+        color: var(--lv-text-muted);
+        font-weight: 800;
+        background: var(--lv-bg-surface);
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 6px;
+        border: 1px dashed #ccc;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Features */
+      .lv-feature-list {
+        list-style: none;
+        flex-grow: 1;
+        margin-bottom: 2.5rem;
+      }
+      .lv-feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        color: var(--lv-text-main);
+      }
+      .lv-feature-list li .check {
+        color: var(--lv-green);
+        font-weight: bold;
+      }
+      .lv-feature-list li.missing {
+        color: #aaa;
+        text-decoration: line-through;
+      }
+      .lv-feature-list li.missing .check {
+        color: #ccc;
+        text-decoration: none;
+      }
+
+      .lv-btn-tier {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 16px;
+        border-radius: var(--radius-sm);
+        font-weight: 800;
+        text-decoration: none;
+        border: 2px solid var(--lv-text-main);
+        color: var(--lv-text-main);
+        transition: all 0.2s;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
+      .lv-btn-tier:hover {
+        background: var(--lv-text-main);
+        color: #fff;
+      }
+      .popular .lv-btn-tier {
+        background: var(--lv-green);
+        border-color: var(--lv-green);
+        color: #fff;
+      }
+      .popular .lv-btn-tier:hover {
+        background: var(--lv-green-dark);
+        border-color: var(--lv-green-dark);
+      }
+
+      /* ==========================================
+       ROI ANCHOR & MASSIVE CTA & FAQ
+       ========================================== */
+      .lv-roi-banner {
+        background: #111;
+        color: #fff;
+        border-radius: var(--radius-lg);
+        padding: 5rem 3rem;
+        text-align: center;
+        margin-bottom: 6rem;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+      }
+      .lv-roi-banner h3 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        letter-spacing: -1px;
+      }
+
+      .lv-btn-massive {
+        display: inline-block;
+        background: var(--lv-green);
+        color: #fff;
+        padding: 22px 45px;
+        font-size: 1.2rem;
+        font-weight: 800;
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        margin-top: 3rem;
+        box-shadow: 0 10px 30px rgba(27, 138, 90, 0.3);
+        border: 2px solid var(--lv-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .lv-btn-massive:hover {
+        background: var(--lv-green-dark);
+        border-color: var(--lv-green-dark);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(27, 138, 90, 0.5);
+      }
+
+      .lv-faq-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .lv-faq-item h4 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      .lv-faq-item p {
+        color: var(--lv-text-muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 992px) {
+        .lv-pricing-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .lv-tier-card.popular {
+          transform: none;
+        }
+        .lv-tier-card.popular:hover {
+          transform: translateY(-5px);
+        }
+        .lv-paradigm-box,
+        .lv-faq-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <lv-navbar></lv-navbar>
+
+    <header class="lv-page-hero">
+      <div class="lv-container">
+        <div class="lv-badge">Trasparenza Totale</div>
+        <h1 class="lv-h1">
+          Non è un abbonamento.<br />È un'
+          <span class="lv-highlight">Infrastruttura.</span>
+        </h1>
+        <p class="lv-hero-p">
+          Seleziona il modulo architettonico adatto alla fase attuale della tua
+          azienda. Nessun contratto vincolante, nessuna percentuale trattenuta
+          sui tuoi incassi.
+        </p>
+
+        <div class="lv-paradigm-box">
+          <div class="lv-paradigm-col">
+            <h4>🛠️ L'Engineering Sprint (Setup)</h4>
+            <p>
+              La quota iniziale non è una tassa. Copre i 14 giorni in cui il
+              nostro team ingegnerizza fisicamente i tuoi server, mappa le API,
+              configura il CRM e costruisce la tua macchina da zero.
+            </p>
+          </div>
+          <div class="lv-paradigm-col">
+            <h4>⚡ La Licenza (Canone Mensile)</h4>
+            <p>
+              Il canone copre i costi vivi dell'ecosistema: hosting dedicato su
+              Hetzner, licenza cloud enterprise, token dell'Intelligenza
+              Artificiale, SMS illimitati e manutenzione sistemistica.
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="lv-section" style="padding-top: 0">
+      <div class="lv-container">
+        <div class="lv-pricing-grid">
+          <div class="lv-tier-card">
+            <div class="lv-tier-name">Foundation</div>
+            <p class="lv-tier-target">
+              Per chi ha bisogno di dominare la ricerca locale su Google e farsi
+              trovare.
+            </p>
+
+            <div class="lv-pricing-block">
+              <div class="lv-price-monthly">€197<span>/mese</span></div>
+              <div class="lv-price-setup">
+                Setup Architetturale: Su Preventivo
+              </div>
+            </div>
+
+            <ul class="lv-feature-list">
+              <li>
+                <span class="check">✓</span> Ottimizzazione Scheda Google (GBP)
+              </li>
+              <li>
+                <span class="check">✓</span> Sincronizzazione NAP (50+
+                Directory)
+              </li>
+              <li>
+                <span class="check">✓</span> Risposte Recensioni via AI (SEO)
+              </li>
+              <li>
+                <span class="check">✓</span> Reportistica Mensile Posizionamento
+              </li>
+              <li class="missing">
+                <span class="check">✗</span> Tasto Blu "Reserve with Google"
+              </li>
+              <li class="missing">
+                <span class="check">✗</span> CRM Cloud Proprietario
+              </li>
+              <li class="missing">
+                <span class="check">✗</span> Automazione WhatsApp / LV-Bridge
+              </li>
+            </ul>
+
+            <a href="automazione.html#audit" class="lv-btn-tier"
+              >Richiedi Fattibilità</a
+            >
+          </div>
+
+          <div class="lv-tier-card popular">
+            <div class="lv-popular-badge">Il più scelto dai Saloni</div>
+            <div class="lv-tier-name">Conversion OS</div>
+            <p class="lv-tier-target">
+              Per chi vuole disintermediare da Treatwell/TheFork e azzerare le
+              commissioni.
+            </p>
+
+            <div class="lv-pricing-block">
+              <div class="lv-price-monthly">€297<span>/mese</span></div>
+              <div class="lv-price-setup">
+                Setup Architetturale: Su Preventivo
+              </div>
+            </div>
+
+            <ul class="lv-feature-list">
+              <li>
+                <span class="check">✓</span>
+                <strong>Tutto il pacchetto Foundation</strong>
+              </li>
+              <li>
+                <span class="check">✓</span> Tasto Blu (Reserve with Google)
+              </li>
+              <li><span class="check">✓</span> CRM Cloud Proprietario</li>
+              <li>
+                <span class="check">✓</span> Scudo Anti No-Show (Caparra Stripe)
+              </li>
+              <li>
+                <span class="check">✓</span> Automazione SMS/Email di Recall
+              </li>
+              <li>
+                <span class="check">✓</span> Protocollo Dirottamento Clienti
+              </li>
+              <li class="missing">
+                <span class="check">✗</span> Integrazione Middleware (LV-Bridge)
+                per vecchi gestionali
+              </li>
+            </ul>
+
+            <a href="automazione.html#audit" class="lv-btn-tier"
+              >Candidati per Conversion OS</a
+            >
+          </div>
+
+          <div class="lv-tier-card">
+            <div class="lv-tier-name">Autonomous</div>
+            <p class="lv-tier-target">
+              Infrastruttura Enterprise per cliniche e multi-sede con vecchi
+              gestionali.
+            </p>
+
+            <div class="lv-pricing-block">
+              <div class="lv-price-monthly">€597<span>/mese</span></div>
+              <div class="lv-price-setup">
+                Setup Architetturale: Su Preventivo
+              </div>
+            </div>
+
+            <ul class="lv-feature-list">
+              <li>
+                <span class="check">✓</span>
+                <strong>Tutto il pacchetto Conversion OS</strong>
+              </li>
+              <li>
+                <span class="check">✓</span> Middleware LV-Bridge (Integrazione
+                Legacy)
+              </li>
+              <li><span class="check">✓</span> WhatsApp AI Assistant H24</li>
+              <li>
+                <span class="check">✓</span> AI Voice Agent per Centralino
+              </li>
+              <li>
+                <span class="check">✓</span> Gestione Multi-Calendario e Staff
+              </li>
+              <li>
+                <span class="check">✓</span> Supporto Priority (Canale Slack
+                Diretto)
+              </li>
+            </ul>
+
+            <a href="automazione.html#audit" class="lv-btn-tier"
+              >Candidati per Autonomous</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lv-section" style="padding-top: 0">
+      <div class="lv-container">
+        <div class="lv-roi-banner">
+          <h3>Un mese di commissioni paga un anno del nostro sistema.</h3>
+          <p
+            style="
+              font-size: 1.15rem;
+              color: #a9b7c6;
+              max-width: 750px;
+              margin: 0 auto;
+              line-height: 1.7;
+            "
+          >
+            Se stai versando 500€ o 1.000€ al mese in "tasse" a piattaforme
+            esterne, il passaggio a LocalVista non è un nuovo costo aziendale. È
+            una manovra di recupero margini. Il ROI matematico si raggiunge
+            mediamente nel primo mese di utilizzo.
+          </p>
+          <a href="automazione.html#audit" class="lv-btn-massive"
+            >Esegui l'Audit Architetturale</a
+          >
+        </div>
+
+        <div style="text-align: center; margin-bottom: 4rem">
+          <h2 class="lv-h2">Domande Frequenti (FAQ)</h2>
+        </div>
+
+        <div class="lv-faq-grid">
+          <div class="lv-faq-item">
+            <h4>Trattenete delle commissioni sulle prenotazioni?</h4>
+            <p>
+              Assolutamente no. Il nostro modello è basato su un canone fisso
+              per il mantenimento dell'infrastruttura. Che tu riceva 10 o 10.000
+              prenotazioni dal Tasto Blu, l'incasso è 100% tuo.
+            </p>
+          </div>
+          <div class="lv-faq-item">
+            <h4>Cosa succede al mio database se chiudiamo l'accordo?</h4>
+            <p>
+              Ti esportiamo l'intero database in formato CSV e te lo
+              consegniamo. A differenza delle piattaforme esterne, noi
+              rispettiamo la regola aurea: i dati che generi sono legalmente e
+              fisicamente tuoi.
+            </p>
+          </div>
+          <div class="lv-faq-item">
+            <h4>Posso passare a un piano superiore in futuro?</h4>
+            <p>
+              Certamente. Molti dei nostri clienti partono con il piano
+              <em>Conversion</em> per riprendere il controllo del database, e
+              dopo 6 mesi fanno l'upgrade ad <em>Autonomous</em> per integrare
+              il chatbot AI su WhatsApp.
+            </p>
+          </div>
+          <div class="lv-faq-item">
+            <h4>Devo licenziare il mio software gestionale attuale?</h4>
+            <p>
+              Dipende dal piano. Con il piano <em>Autonomous</em>, usiamo il
+              nostro LV-Bridge proprietario per agganciarci al tuo vecchio
+              gestionale, permettendoti di mantenerlo. Con gli altri piani, ti
+              forniamo un CRM cloud di nuova generazione che sostituisce
+              integralmente le agende obsolete.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="js/components.js"></script>
+  </body>
+</html>
