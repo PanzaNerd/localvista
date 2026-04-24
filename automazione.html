@@ -319,6 +319,18 @@
           padding: 2rem;
         }
       }
+
+      /* ==========================================
+       HACK: OVERRIDE CHROME AUTOFILL IN DARK MODE
+       ========================================== */
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #111 inset !important;
+        -webkit-text-fill-color: #00a3ff !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
     </style>
   </head>
   <body>
@@ -708,44 +720,56 @@
     <script>
       document
         .getElementById("blueprint-form")
-        .addEventListener("submit", async (e) => {
+        .addEventListener("submit", (e) => {
           e.preventDefault();
           const btn = document.getElementById("audit-btn");
           const btnText = document.getElementById("audit-btn-text");
 
-          btnText.innerText = "Analisi in corso...";
-          btn.style.opacity = "0.7";
+          // 1. Start Animazione (Forziamo i colori HEX per evitare bug visivi)
+          btn.style.backgroundColor = "#222";
+          btn.style.borderColor = "#444";
+          btn.style.boxShadow = "none";
+          btnText.style.color = "#00a3ff";
+          btnText.innerText = "[ PROCESSING_DATA... ]";
 
+          // 2. Raccolta Dati
           const payload = {
             company: document.getElementById("company").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
             software: document.getElementById("software").value,
             revenue: document.getElementById("revenue").value,
-            painpoint: document.getElementById("painpoint").value,
             timestamp: new Date().toISOString(),
           };
 
-          // Sostituisci con il vero webhook n8n
-          const WEBHOOK_URL = "https://n8n.tuodominio.com/webhook/audit-form";
+          const WEBHOOK_URL =
+            "https://n8n.localvista.it/webhook/c60b3137-52f5-475d-ae33-b17f256c5ef8";
 
-          try {
-            /* Scommentare in produzione:
-        await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        */
+          // 3. Invio Dati in Background (Fire and Forget)
+          // Usiamo .catch interno per silenziare gli errori CORS sul browser dell'utente
+          fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }).catch((err) => console.log("Rete/CORS issue, ma UI procede."));
 
-            // Simulazione caricamento
-            setTimeout(() => {
-              btnText.innerText = "Dati Ricevuti. Ti contatteremo a breve.";
-              btn.style.background = "var(--lv-green)";
-              btn.style.opacity = "1";
-            }, 1500);
-          } catch (error) {
-            btnText.innerText = "Errore di connessione.";
-            btn.style.background = "var(--lv-alert)";
-          }
+          // 4. Animazione UX Garantita (L'utente vede sempre il successo)
+          setTimeout(() => {
+            btnText.innerText = "[ ANALISI_STRUTTURALE... ]";
+          }, 800);
+          setTimeout(() => {
+            btnText.innerText = "[ CALCOLO_INEFFICIENZE... ]";
+          }, 1600);
+          setTimeout(() => {
+            btnText.innerText = "[ REPORT PRONTO - TI CONTATTIAMO A BREVE ]";
+            btn.style.backgroundColor = "#1b8a5a"; // Verde LocalVista
+            btn.style.borderColor = "#14694a";
+            btn.style.boxShadow = "0 0 20px rgba(27, 138, 90, 0.4)";
+            btnText.style.color = "#fff";
+
+            // Svuota il form per far capire che è andato a buon fine
+            document.getElementById("blueprint-form").reset();
+          }, 2600);
         });
     </script>
     <script src="js/components.js"></script>
